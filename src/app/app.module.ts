@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';// <-- NgModel은 이 패키지가 
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppRoutingModule,
     FormsModule,
   ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })
