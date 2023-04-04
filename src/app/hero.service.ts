@@ -11,6 +11,7 @@ export class HeroService {
 
   getHeroes() : Observable<Hero[]>{
     const heroes = of(HEROES);
+    this.messageService.add("heroService : fatched heroes");
     return heroes;
   }
 
