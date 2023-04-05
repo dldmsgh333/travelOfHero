@@ -22,7 +22,7 @@ export class HeroService {
     // const heroes = of(HEROES);
     // this.messageService.add("heroService : fatched heroes");
     // return heroes;
-
+    
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
         tap(_ => this.log('fetched heroes')),
