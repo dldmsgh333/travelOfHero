@@ -73,11 +73,12 @@ export class HeroService {
   /**
    * HTTP 요청이 실패한 경우를 처리합니다.
    * 애플리케이션 로직 흐름은 그대로 유지됩니다.
-   *
+   * 이거 자체가 에러를 만나면 실행되긴 한다.
    * @param operation - 실패한 동작의 이름
    * @param result - 기본값으로 반환할 객체
    */
   private handleError<T>(operation = 'operation', result?: T) {
+    
     return (error: any): Observable<T> => {
 
       // TODO: 리모트 서버로 에러 메시지 보내기
