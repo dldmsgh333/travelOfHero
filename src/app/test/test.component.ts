@@ -35,7 +35,6 @@ export class TestComponent implements OnInit {
     let temp = of(...num);
     let test= temp.pipe( map( (num:number) => num+2));
     test.subscribe(item => console.log(item));
-
     // temp.subscribe( item => 
     //   {
     //     console.log(item);

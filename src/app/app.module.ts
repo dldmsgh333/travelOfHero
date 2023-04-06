@@ -35,7 +35,7 @@ import { TestComponent } from './test/test.component';
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  
+  exports : [],
   providers: [],
   bootstrap: [AppComponent]
 })
