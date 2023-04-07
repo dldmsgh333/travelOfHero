@@ -16,6 +16,7 @@ import { InMemoryDataService } from './service/in-memory-data.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { TestComponent } from './test/test.component';
 import { TestDirective } from './test.directive';
+import { TestParentComponent } from './test-parent/test-parent.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TestDirective } from './test.directive';
     HeroSearchComponent,
     TestComponent,
     TestDirective,
+    TestParentComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, interval, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
+  @Input() hero:string;
+  @Output() newNumber = new EventEmitter<number>();
   observeTest2(){
     const locations = new Observable((observer) => {
       let watchId: number;
@@ -137,6 +138,9 @@ export class TestComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.newNumber.emit(333);
+    let str='Dr. IQ';
+    console.log(str.trim())
     this.observeTest3();
 
   }
