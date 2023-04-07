@@ -15,6 +15,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/in-memory-data.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { TestComponent } from './test/test.component';
+import { TestDirective } from './test.directive';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TestComponent } from './test/test.component';
     DashboardComponent,
     HeroSearchComponent,
     TestComponent,
+    TestDirective,
   ],
   imports: [
     BrowserModule,
