@@ -8,7 +8,6 @@ import { TempComponent } from './temp/temp.component';
 @NgModule({
   declarations: [TempComponent],
   imports: [
-    AppModule
   ]
 })
 export class TestModule { }
