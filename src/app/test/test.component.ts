@@ -137,11 +137,13 @@ export class TestComponent implements OnInit {
 
   constructor() { }
 
+  jsGrammerTest(){
+    let today=new Date();//() 빼도 되네
+    console.log(today);
+  }
   ngOnInit(): void {
     this.newNumber.emit(333);
-    let str='Dr. IQ';
-    console.log(str.trim())
-    this.observeTest3();
+    this.jsGrammerTest();
 
   }
 

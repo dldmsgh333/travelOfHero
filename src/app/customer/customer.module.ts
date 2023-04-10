@@ -10,7 +10,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   declarations: [CustomerComponent],
   imports: [
     CommonModule,
-    MatSlideToggleModule
   ],
   providers: [CustomerService],
 })
