@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../service/message.service';
+import { CustomerService } from '../customer/customer.service';
 
 @Component({
   selector: 'app-test-parent',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class TestParentComponent implements OnInit {
   hero ="good";
   temp = "property"
-  constructor() { }
+  constructor(private messageService: MessageService,private customerService:CustomerService) { }
 
   addItem(newItem: string) {
   }
@@ -17,5 +19,4 @@ export class TestParentComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
 }

@@ -3,7 +3,7 @@ import { Hero } from '../model/hero';
 import { HEROES } from '../testData/mock-heroes';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -54,6 +54,10 @@ export class HeroService {
       catchError(this.handleError<Hero>('deleteHero'))
     );
   }
+  search(term: string):Observable<Hero[]>{
+    let result=this.http.get(this.heroesUrl).pipe();
+    return of([]);
+  }
 
   /* GET: 입력된 문구가 이름에 포함된 히어로 목록을 반환합니다. */
   searchHeroes(term: string): Observable<Hero[]> {
@@ -61,6 +65,9 @@ export class HeroService {
       // 입력된 내용이 없으면 빈 배열을 반환합니다.
       return of([]);
     }
+    //이런식으로 query string을 직접 제공할 수 있다.
+    // const option = term ? {params :new HttpParams().set( 'name',term)} : {};
+    // return this.http.get<Hero[]>(this.heroesUrl,option);
     return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
       tap(x => x.length ?
         this.log(`found heroes matching "${term}"`) :
@@ -102,6 +109,6 @@ export class HeroService {
   private log(message: string) {
     this.messageService.add(`HeroService : ${message}`);
   }
-
+  // http를 사용하고싶으면 httpClient로 받아오면된다.
   constructor(private http: HttpClient, private messageService: MessageService) { }
 }

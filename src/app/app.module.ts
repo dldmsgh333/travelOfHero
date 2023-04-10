@@ -17,6 +17,9 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { TestComponent } from './test/test.component';
 import { TestDirective } from './test.directive';
 import { TestParentComponent } from './test-parent/test-parent.component';
+import { CustomerModule } from './customer/customer.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,11 @@ import { TestParentComponent } from './test-parent/test-parent.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    CustomerModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule
+
   ],
   exports : [HeroesComponent],
   providers: [],
