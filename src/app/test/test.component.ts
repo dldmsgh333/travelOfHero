@@ -139,12 +139,45 @@ export class TestComponent implements OnInit {
 
   jsGrammerTest(){
     let today=new Date();//() 빼도 되네
-    console.log(today);
+    let array=[1,2,3,4];
+    
+    //타입 확인
+    // console.log(today);
+    // console.log(typeof today);
+    // console.log(typeof "hello:");
+    // console.log(typeof array);
+
+    //고차원 함수와 콜백 함수 확인
+    function add(num1){
+      return function (num2){
+        return num1+num2;
+      }
+    }
+    let temp=add(5);
+    // console.log(temp(3))
+
+    //2진수,8진수,16진수 모두 10진수로 해석된다.
+    // var binary = 0b01000001; // 2진수
+    // var octal = 0o101;       // 8진수
+    // var hex = 0x41;          // 16진수
+    // console.log(binary); 
+    // console.log(octal);
+    // console.log(octal === hex); //같은 타입과 값이다.
+
+    //js는 실수도 같다고 나온다
+    let num1=3.33,num2=3.33
+    console.log( num1=== num2)//true
+    let num3=3.0,num4=3;//정수만을 위한 타입은 없다는거 확인
+    console.log(num3 === num4);//true
+    console.log(-Infinity )
+    // ===,== 연산의 차이
+    //===은 값과 타입비교,==은 값만 비교
   }
   ngOnInit(): void {
     this.newNumber.emit(333);
     this.jsGrammerTest();
-
+    // console.log(typeof this.jsGrammerTest);
+    
   }
 
 }
