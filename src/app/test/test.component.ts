@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject, interval, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { Person,Test } from '../model/person';
 
 @Component({
   selector: 'app-test',
@@ -141,21 +142,29 @@ export class TestComponent implements OnInit {
     let today=new Date();//() 빼도 되네
     let array=[1,2,3,4];
     
+    //타입 추론 - 변수의 초기값을 통해서 타입을 지정합니다.
+    let num=5;
+    num=3;
+    //num='a';
+    let test:string,test2: undefined;
+    console.log(typeof test);
+    console.log(typeof test2)
     //타입 확인
     // console.log(today);
     // console.log(typeof today);
     // console.log(typeof "hello:");
     // console.log(typeof array);
-
+    // console.log(typeof 123);
     //고차원 함수와 콜백 함수 확인
-    function add(num1){
-      return function (num2){
-        return num1+num2;
-      }
-    }
-    let temp=add(5);
+    // function add(num1){
+    //   return function (num2){
+    //     return num1+num2;
+    //   }
+    // }
+    // let temp=add(5);
     // console.log(temp(3))
 
+    //number type
     //2진수,8진수,16진수 모두 10진수로 해석된다.
     // var binary = 0b01000001; // 2진수
     // var octal = 0o101;       // 8진수
@@ -170,12 +179,85 @@ export class TestComponent implements OnInit {
     let num3=3.0,num4=3;//정수만을 위한 타입은 없다는거 확인
     console.log(num3 === num4);//true
     console.log(-Infinity )
+    
+    //string 타입
+    //유사 배열처럼 사용이 가능하다. map.filter같은건 안된다.
+    let str="hello";
+    for( let item of str){
+      console.log(item); //h,e,1,1,o 
+    }
+    console.log(str[2]);//1
+    // str[2]='a'; //원시 타입이라 readonly만 가능
+    console.log(str.substring(1,3));//el start,end-1 까지
+    let ary=[1,2,3,4];
+    //연산자할때 정리하자.
     // ===,== 연산의 차이
     //===은 값과 타입비교,==은 값만 비교
   }
+
+  /**
+   * 인터페이스,객체,비구조화할당, ... 연산자에 대한 테스트
+   */
+  jsGrammerTest2(){
+    // let temp: Person = {name : "jack", age : 30, address : "서울"};//정상
+    // let {address,name} =temp;
+    // console.log(` ${address} ${name}`);
+    // let names:Test = {name1 : 'name1',name2: 'name2',name3: 'name3'};
+
+    // //잔여 연산자로 쓸 경우
+    // let {name1,...namess} = names;//name2,name3 이 namess에 객체로 들어간다.
+    // console.log(namess);
+    //전개 연산자로 쓰는 경우
+    let part1=[1,2,3,4,5],part2=[10,20,30];
+    let sum=[...part1,...part2];
+    let sum2=[...part1,...part2];
+    console.log(...part1)//1,2,3,4,5
+    console.log(sum);//[1, 2, 3, 4, 5, 10, 20, 30]
+    console.log(sum2);
+    let coord={...{x: 0},...{y: 0}}
+    console.log(coord);//객체에 안되네?.. 1개짜리만 되는건가보다.iterator가 없으니까?
+
+    let part11={name : 'jane'},part12={age : 22},part13= {city : 'seoul',country : 'kr'}
+    let merged={...part11,...part12,...part13};
+    let test={...merged};//iterator가 없어서 배열로 만들 수는 없는데 객체론 된다?
+    console.log(test);
+    const testt =function(...args){
+      console.log(args);
+    }
+    testt.apply(null,[12,3,4,5]);
+    testt.call(null,1,2,3,4,5,6);
+    console.log([...'apple']);
+    // console.log(...coord);
+
+    //타입 변환
+    let person:object = {name : 'lee',age: 20};
+    //이렇게해야하나싶네 {name:string} 타입으로 변환해서 속성값을 얻음
+    (<{name:string}>person).name
+    let undefinedTest
+    console.log(typeof undefinedTest)
+  }
+
+  /**
+   * undefined를 전달인자로 받는 상황 고려
+   * 
+   */
+  jsGrammerTest3(){
+    interface INameable{
+      name:string;
+    }
+
+    //undefined에 name이 있을리가 없다. 그래서 런타임에 문제가 발생한다.
+    function getName(o:INameable){
+      // return o.name;
+      return o != undefined ? o.name : 'unknown name';
+    }
+
+    console.log(getName({name : 'myname'}));
+  }
   ngOnInit(): void {
     this.newNumber.emit(333);
-    this.jsGrammerTest();
+    // this.jsGrammerTest2();
+    this.jsGrammerTest3();
     // console.log(typeof this.jsGrammerTest);
     
   }
