@@ -22,9 +22,22 @@ class Car{
   setPrice(price:number){
     this.price=price;
   }
-  //접근제한자 생략하면 public일 줄 알았는데 아니라 속성으로 인식도 못한다.
-  //생성자에서 접근 제한자를 안쓰면 속성을 직접 선언해야한다.
   constructor(private price:number){}
+}
+
+export abstract class Test2{
+	abstract test:number;
+  abstract add();
+  static test1(){
+    return console.log('test');
+  }
+}
+
+class temp123 extends Test2{
+  test: number;
+   add(){
+
+   };
 }
 
 let testCar = new Car(3000);
@@ -36,3 +49,19 @@ function printMe(me:{name: string; age: number; etc?: boolean}){
 }
 // let person2: Person = {name : "jap",age : 30,address : "제주도" , call : "010 5661 5820"}//call은 없는 속성 오류
 // let person3: Person = {name : "lee",age : 30}//address가 빠져서 오류
+
+interface Foo {
+  bar: number;
+  bas: string;
+}
+
+
+
+type stringNumberFunc =  (string,number) => void
+
+let printMe1: stringNumberFunc = function( name:string, age: number): void {
+	console.log(name,age);	
+}
+let test: stringNumberFunc = function(target: string,count: number): void{
+	console.log(`${target} is ${count}`);
+}

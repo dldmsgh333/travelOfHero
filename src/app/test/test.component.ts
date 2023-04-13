@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subject, interval, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { Person,Test } from '../model/person';
+import { Event } from '@angular/router';
 
 @Component({
   selector: 'app-test',
@@ -239,6 +240,7 @@ export class TestComponent implements OnInit {
 
   /**
    * undefined를 전달인자로 받는 상황 고려
+   * 실행문과 표현식 예제 테스트
    * 
    */
   jsGrammerTest3(){
@@ -252,14 +254,138 @@ export class TestComponent implements OnInit {
       return o != undefined ? o.name : 'unknown name';
     }
 
+    let test123;
+    test123=3;
+
+    let nu12:number;
+    nu12=3;
+    nu12=undefined;
+    let a:string,b;
+    b=10;
+    //javascript 기본문법이라 es5 이하라 실행문이라 안되는건가?
     console.log(getName({name : 'myname'}));
+
+    var temp:number;
+    interface Foo {
+      name? : string;
+      age : number;
+    }
+    
+    function handler (event:Event){
+    }
+    let foo :Foo = {
+      age : 32
+    }
   }
+
+  jsGrammerTest4(){
+
+    let num,num2;
+    function add(num1:number,num2:number){
+      return num1+num2;
+    }
+
+    function add1(num1:number,num2:number){
+      num1 != undefined ? num1 : num1=0;
+      num2 != undefined ? num2 : num2=0;
+      console.log(num1,num2)
+      return num1+num2;
+    }
+    let result=add1(num,num2);
+    console.log(result)
+    let add123= new Function('a','b','return a+b');
+    const calc = (value: number, cb: (number) => void): void => {
+      let add = (a,b) => a+b 
+      
+      function multiply(a,b){return a*b}
+      let result=multiply(add(1,2),value);
+      cb(result);
+    }
+
+    calc(30, (result: number) => console.log(`result is ${result}`));
+    const ad1d = (a:number): Function => (b:number): number => a+b
+    let lll=ad1d(3)
+    console.log(lll(3));
+
+    const adD = (a:number): Function => {
+      function _add(b:number):number{
+        return a+b;
+      }
+      return _add;
+    }
+    let add5=adD(5);
+    console.log(add5(3));
+
+    
+    const makePerson = (name: string,age: number = 10):Person =>{
+      const person={name,age};
+      return person  
+    }
+    type Person = {name: string,age: number}
+    const printPerson = ({name,age}: Person):void => console.log(`name : ${name},age ${age}`);
+    printPerson({name:'nick',age:30});
+    console.log(makePerson('jack'));
+    console.log(makePerson('tom',30));
+
+    const makeObject = (key,value) => ({[key] : value})
+    console.log(makeObject('name','nick')); // {name: 'nick'}
+
+    // class A{
+    //   value:number = 1;
+    //   method():void {
+    //     console.log(this.value);  
+    //   }
+    // }
+    // let a=new A();
+    // a.method();
+
+    function makeAdder(x) {
+      return function(y) {
+        return x + y;
+      };
+    }
+
+    var add6 = makeAdder(6);
+    var add10 = makeAdder(10);
+    //클로저에 x와 y의 환경이 저장됨
+
+    console.log(add6(2));  // 107 (x:6 + y:2)
+    console.log(add10(2)); // 112 (x:10 + y:2)
+    //함수 실행 시 클로저에 저장된 x, y값에 접근하여 값을 계산
+    
+    class A{
+      static num = 50;
+    }
+    console.log(A.num);
+  }
+
+
+  
   ngOnInit(): void {
     this.newNumber.emit(333);
     // this.jsGrammerTest2();
-    this.jsGrammerTest3();
+    this.jsGrammerTest4();
     // console.log(typeof this.jsGrammerTest);
-    
+
+    var name = 'zero';
+    function log() {
+      console.log(name);
+    }
+
+    function wrapper() {
+      var name = 'nero';
+      log();
+    }
+    wrapper();
+
+    {
+      let a=5;
+      {
+        console.log('a',a);
+      }
+    }
   }
 
 }
+
+const f =(callback: () => void): void => callback();
