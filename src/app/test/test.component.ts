@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subject, interval, of } from 'rxjs';
+import { Observable, Subject, interval, merge, of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { Person,Test } from '../model/person';
 import { Event } from '@angular/router';
@@ -360,38 +360,63 @@ export class TestComponent implements OnInit {
     class B{
       static two = 10;
     }
-
+    //can't multiple inheritance
     class C  extends A{
 
     }
     console.log(A.num);
+
+    
   }
 
+  stringAndArrayTest(){
+    let str="hello";
+    console.log(str[0]); 
+    //string 넣으면 구분자 1개로만 가능하다.
+    let chars=str.split("");
+    console.log(chars);
+    //여러개 하고싶으면 정규 표현식 써야하고, 자르는 개수 제한은 2번째 인자인 limit 사용하면된다.
+    //정규표현식은 찾아보고 습득
+    
+    //join으로 다시 합칠 수 있다.디폴트 seperator는 ,
+    let merge=chars.join("");
+    console.log(chars.join());// h,e,l,l,o
+    console.log(chars.join("")); // hello
+
+    let numberList=[10,20,30,40,50];
+
+    //배열도 객체라 접근이 가능하나 index가 나온다.
+    // for( let item in numberList){
+    //   console.log(item);
+    // }
+    
+    let person= {name: 'jack',age: 30,address: '서울'}
+    //객체를 해도 프로터미가 나오네? 값이 나오는줄 알았는데
+    for ( let item in person){
+      console.log(item,person)//name ,jack ,age , 30 ...
+    }
+    //js에선 되는데 ts에서는 막았다.논리적으론 object라 될거같은데 사실 접근이 되는게 좀 이상하긴하다.잘못된 사용법
+    // for( let item in merge){
+    //   console.log(item);
+    // }
+
+    //이게 향상된 포문이랑 같다.string도 유사배열이라 사용이 가능하다.
+    for( let item of merge){
+      console.log(item);
+    }
+
+    for( let item of numberList){
+      console.log(item);
+    }
+  } 
 
   
   ngOnInit(): void {
-    this.newNumber.emit(333);
+    //this.newNumber.emit(333);
     // this.jsGrammerTest2();
-    this.jsGrammerTest4();
     // console.log(typeof this.jsGrammerTest);
+    this.stringAndArrayTest()
 
-    var name = 'zero';
-    function log() {
-      console.log(name);
-    }
-
-    function wrapper() {
-      var name = 'nero';
-      log();
-    }
-    wrapper();
-
-    {
-      let a=5;
-      {
-        console.log('a',a);
-      }
-    }
   }
 
 }
