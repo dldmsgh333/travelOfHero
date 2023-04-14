@@ -5,6 +5,7 @@ import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { Person,Test } from '../model/person';
 import { Event } from '@angular/router';
 
+
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -404,21 +405,55 @@ export class TestComponent implements OnInit {
     for( let item of merge){
       console.log(item);
     }
-
+    //index가 아니라 값이 나온다.
     for( let item of numberList){
       console.log(item);
     }
   } 
 
+  genericTest(){
+    const arrayLength = <T>(array:T[]):number => array.length;
+    //아래처럼 하면 어거지로 된다.
+    let mix=[1,2,3,'a'];
+    //이렇게 타입지정하면 섞어서 못쓰는구나!
+    // let test:number[] = [1,'a','b'];
+    let strList:string[]=['1,','2','3'];
+    arrayLength(strList);
+    arrayLength(['a','b',"c","d"]);
+    console.log(arrayLength(mix));
+    // console.log(typeof test);
+
+    let numbers=[1,3,4,5,6]
+    for( let number of numbers)
+      console.log(number)
+    type tempAs = (arg1:string,arg2:string) => void
+    type test = {a:number,b:number,numbers,number};
+    const let1= (a:string,b:string) =>{
+
+    }
+    //함수 시그니처는 
+    // let1(1,2);
+    function addT(){
+
+    }
+  }
   
+  arrayTest(){
+    //중간에 값찍는 법 없나?
+    const array=Array(5).fill(10).map( (x,y,ary) => {console.log(ary); return x+y});
+    console.log(...array)
+  }
   ngOnInit(): void {
     //this.newNumber.emit(333);
     // this.jsGrammerTest2();
     // console.log(typeof this.jsGrammerTest);
-    this.stringAndArrayTest()
+    // this.stringAndArrayTest()
+    this.arrayTest();
 
   }
-
+  //재귀함수를 짜면되는구나!
+  //1~....n까지 숫자 배열을 생성하는 함수
+  
 }
 
 const f =(callback: () => void): void => callback();
