@@ -356,6 +356,14 @@ export class TestComponent implements OnInit {
     class A{
       static num = 50;
     }
+
+    class B{
+      static two = 10;
+    }
+
+    class C  extends A{
+
+    }
     console.log(A.num);
   }
 
