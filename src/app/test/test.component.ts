@@ -492,23 +492,147 @@ export class TestComponent implements OnInit {
     }
   }
 
-  promiseTest(){
-    const readPromise= (filename:string):Promise<string> => new Promise<string>( (
-      resolve: (value: string) => void,
-      reject: (error: Error) => void ) => {
-        if(true){
-          resolve("success");
-        }
-        else{
-          reject(new Error("fail"));
-        } 
-      });
+  async promiseTest(){
+    // const readPromise= (filename:string):Promise<string> => new Promise<string>( (
+    //   resolve: (value: string) => void,
+    //   reject: (error: Error) => void ) => {
+    //     if(true){
+    //       resolve("success");
+    //     }
+    //     else{
+    //       reject(new Error("fail"));
+    //     } 
+    //   });
+    //   try {
+    //     setTimeout(() => { console.log("start?"); throw new Error('Error!'); }, 2000);
+    //   } catch (e) {
+    //     console.log('에러를 캐치하지 못한다..');
+    //     console.log(e);
+    //   }
+    //   finally{
+    //     console.log("finally")
+    //   }
+
+    //   const rejected = Promise.reject(new Error("my error"));
+    //   rejected.catch( console.log );
+
+    //   const resolve = Promise.resolve(123);
+    //   resolve.then(console.log);
+    //   const res=resolve.then( (value) => {return value+3333})
+
+    // resolve 호출하면 끝이다.(resolve 처음되면 그 후 호출은 되는데 적용은 안된다.)
+    // const myPromise= new Promise<string>( (resolve,reject) =>{
+    //   setTimeout( () => {resolve("1"); console.log(2)},3000);
+    //   setTimeout( () => {resolve("2");console.log(2)},2000);
+    //   setTimeout( () => resolve("3"),1000);
+    // })
+    // console.log('await',await myPromise);
+    // setTimeout(() => {myPromise.then(console.log)},3000)
+    // myPromise.then(console.log);
+    
+    // const promises = Promise.all([
+    //     new Promise(resolve => setTimeout( () => resolve(3),3000 )),
+    //     new Promise(resolve => setTimeout( () => resolve(2),2000 )),
+    //     new Promise(resolve => setTimeout( () => resolve(1),1000 )),
+    //   ]).then(console.log);
+
+    //promise를 안달고도 된다.(제일 빠르긴한데 이래도 되나?)
+    // const promises = Promise.all([
+    //   111,'aaa','ccc'
+    // ]).then( value => {console.log(value);return [1,2,3]})//.then(console.log);
+    // console.log('teste',promises)
+
+    // const asyncExeception = async () => {
+    //   throw new Error('my error2');
+    // }
+    // asyncExeception().catch( err => console.log(err)) 
+
+    // const test = async (filenames:string[]) => {
+    //   return await Promise.all([1,2,3,4]);
+    // }
+    // test(['first','seconde']).then( ([a,...rest]:number[]) => console.log(a,rest));
+
+    // const resolvePromise=Promise.resolve([1,2,3]);
+    // console.log(await resolvePromise);
+    // resolvePromise.then(console.log).then(console.log);
+
+    //async자체로 비동기로 처리되는게 아니다!promise와 await이 있어야 비동기 처리다.
+    // const test1 = async () => {
+    //   Promise.resolve(10).then( (values) => {
+    //     for(let number=0;number<values;number++)
+    //       console.log(number)
+    //     })    
+    // }
+
+    // const test2 = async () => {
+    //   for(let i=10;i<20;i++)
+    //     await console.log('2',2)
+    // }
+    //아니 내가 생성하는구나. 정신차리자.
+    //생성하는 순간 바로 비동기로 처리가 진행된다.그 결과를 받는 순간이 해당 Promise에 then하는 순간인거고. 이거 팩트 맞냐?
+    const test1 =new Promise( resolve => {
+      setTimeout( () => {console.log('first promise'); resolve(10);},5000)
+    }).then( value => console.log('기다렸지?'))
+    const test2 =new Promise( resolve => {
+      setTimeout( () => console.log('second promise'),3000)
+      console.log("되지?")
+      resolve(20);
+    }).then(console.log)
+    //이럼 비동기 처리 아니야?
+    let result;
+    //결과를 then의 값으로 받고싶으면 await 처리를 하면되는거다.
+    //이게 아마 10초뒤에 진행되겠지.
+    //then쓰면 결과 받는 순간 실행이지? 그치?
+    // result=await test1.then( (value:number) => {
+    //   for(let i=0;i < value;i++)
+    //     console.log('1',i);
+    //   return 5;
+    // })
+    //여기도 마찬가지겠네?
+    // result=await test2.then( (value:number) => {
+    //   for(let i=0;i < value;i++)
+    //     console.log('2',i);
+    //   return 5;
+    // })
+    // console.log(result);
+
+    
+    // test2.then( (value:number) => {
+    //   for(let i=0;i < value;i++)
+    //     console.log(2);
+    // })
+    //여기가 바로 올 줄 알았는데 await 때문에 막힌다?
+    console.log('first row')
   }
+
+  //함수단위로 독립처리해라.
+  async promiseTest2(){
+    let value=10;
+    //프로미스는 비동기 처리를 하고 성공하면 resolve 실패하면 rejected를 호출한다.
+    for(let i=0;i < value;i++){
+      console.log('1',i);
+    }
+    for(let i=0;i < value;i++){
+      console.log('2',i);
+    }      
+  }
+
+  async promiseTest3(){
+    let value = await 1
+    
+  }
+
+  async promiseTest4(){
+    const test=new Promise( (resolve,reject) => reject('error')).catch(console.log).then(console.log);
+  }
+
   // asyncTest(){
   //   const buffer:Buffer = readFileSync('./package.json');
   //   console.log(buffer.toString());
   // }
   ngOnInit(): void {
+    // this.promiseTest();
+    this.promiseTest4();
     //this.newNumber.emit(333);
     // this.jsGrammerTest2();
     // console.log(typeof this.jsGrammerTest);
@@ -525,7 +649,7 @@ export class TestComponent implements OnInit {
     // console.log(temp2);
     // this.genericTest(t);
     // console.log('test:',test);
-    console.log(this.errorTest2())
+    // console.log(this.errorTest2())
   }
   //재귀함수를 짜면되는구나!
   //1~....n까지 숫자 배열을 생성하는 함수
