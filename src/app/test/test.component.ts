@@ -14,6 +14,12 @@ import { Event } from '@angular/router';
 export class TestComponent implements OnInit {
   @Input() hero:string;
   @Output() newNumber = new EventEmitter<number>();
+  love='love'
+  //화살표 함수는 this가 맛이간다.
+  test = () =>{
+    console.log(this.love);
+  }
+
   observeTest2(){
     const locations = new Observable((observer) => {
       let watchId: number;
@@ -411,7 +417,7 @@ export class TestComponent implements OnInit {
     }
   } 
 
-  genericTest(){
+  genericTest(num:number[]){
     const arrayLength = <T>(array:T[]):number => array.length;
     //아래처럼 하면 어거지로 된다.
     let mix=[1,2,3,'a'];
@@ -433,23 +439,93 @@ export class TestComponent implements OnInit {
     }
     //함수 시그니처는 
     // let1(1,2);
-    function addT(){
+    let ttt=[1,2,3,4]
+    function addT(temp:number[]){
+        temp.push(1);
+    }
+    num=[1,2,3,4];
 
+    console.log('num',num);
+  }
+  name='hello'
+  
+  arrayTest(test:Person,nums:number[]){
+    //중간에 값찍는 법 없나?
+    // const array=Array(5).fill(10).map( (x,y,ary) => {console.log(ary); return x+y});
+    // console.log(...array)
+    
+    //=>의 this는 저세상으로 작동한다.
+    const person = {
+      name: 'lee',
+      sayHi(){
+        console.log(this.name)
+      }
+    };
+    // console.log(test)
+    nums.push(10);
+    test.name='lee'
+    // console.log(person.sayHi())
+    //튜플은 개수가 맞아야한다.난 타입만 지정인줄
+    const tuple:[number,string,boolean] = [1,'a',true];
+    console.log(tuple)
+    //[][]인 이유는 1차원 배열로 구성된 배열을 받으니깐 2차 배열이다
+    const mergeArray = function<T>(...args: T[][]):T[]{
+      let result = [];
+      console.log(args)
+      console.log("------")
+      for( let item of args){
+        // console.log(result,item)
+        console.log(item)
+          result=[...result,...item]
+      }
+      return result
+    }
+    console.log(mergeArray(['ㄴㅇㄹㄴ'],['ㄴㅇㄹㄴㅁㄴ']))
+  }
+
+  errorTest2(): [boolean,string]{
+    try{
+      throw new Error("error test");
+    }
+    catch(e){
+      return [false,e.message];
     }
   }
-  
-  arrayTest(){
-    //중간에 값찍는 법 없나?
-    const array=Array(5).fill(10).map( (x,y,ary) => {console.log(ary); return x+y});
-    console.log(...array)
+
+  promiseTest(){
+    const readPromise= (filename:string):Promise<string> => new Promise<string>( (
+      resolve: (value: string) => void,
+      reject: (error: Error) => void ) => {
+        if(true){
+          resolve("success");
+        }
+        else{
+          reject(new Error("fail"));
+        } 
+      });
   }
+  // asyncTest(){
+  //   const buffer:Buffer = readFileSync('./package.json');
+  //   console.log(buffer.toString());
+  // }
   ngOnInit(): void {
     //this.newNumber.emit(333);
     // this.jsGrammerTest2();
     // console.log(typeof this.jsGrammerTest);
     // this.stringAndArrayTest()
-    this.arrayTest();
-
+    // let test:Person = {
+    //   name: 'nick',
+    //   age: 30
+    // }
+    // let t=[1,5,9,10,20,6];
+    // let temp2=t.sort();
+    // console.log(temp2);
+    // let temp=t.sort( (a,b) => a - b);
+    // this.arrayTest(test,t);
+    // console.log(temp2);
+    // this.genericTest(t);
+    // console.log('test:',test);
+    console.log(this.errorTest2())
   }
   //재귀함수를 짜면되는구나!
   //1~....n까지 숫자 배열을 생성하는 함수
